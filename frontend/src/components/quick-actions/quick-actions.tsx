@@ -168,10 +168,10 @@ export const QuickActions = () => {
       <DropdownMenuTrigger asChild>
         <button
           aria-label={t("quickActionsTitle")}
-          className="rounded-full transition-transform duration-200 will-change-transform hover:scale-105 hover:cursor-pointer focus:ring-0 focus:outline-3 focus:outline-ring/50"
+          className="rounded-none transition-transform duration-200 will-change-transform hover:scale-105 hover:cursor-pointer focus:ring-0 focus:outline-3 focus:outline-ring/50"
         >
           {auth.authenticated ? (
-            <div className="size-10 flex justify-center items-center p-2 rounded-full bg-card border border-border">
+            <div className="size-10 flex justify-center items-center p-2 rounded-none bg-card border border-border">
               {isOpen ? (
                 <X className="size-4 text-primary rotate-0 transition-transform duration-200 starting:rotate-45" />
               ) : (
@@ -181,7 +181,7 @@ export const QuickActions = () => {
               )}
             </div>
           ) : (
-            <span className="bg-card text-primary border-border size-10 flex items-center justify-center rounded-full border shadow-lg">
+            <span className="bg-card text-primary border-border size-10 flex items-center justify-center rounded-none border shadow-lg">
               <Settings
                 className={`size-4 transition-transform duration-200 ${
                   isOpen ? "rotate-45" : "rotate-0"
@@ -195,13 +195,13 @@ export const QuickActions = () => {
       <DropdownMenuContent
         align="end"
         sideOffset={8}
-        className="rounded-xl p-1 w-3xs"
+        className="rounded-none p-1 w-3xs"
       >
         {auth.authenticated && (
           <>
             <DropdownMenuLabel className="flex items-center gap-3 p-2">
               <Tooltip>
-                <TooltipTrigger className="size-9 rounded-full p-2 bg-muted border-border border flex items-center justify-center">
+                <TooltipTrigger className="size-9 rounded-none p-2 bg-muted border-border border flex items-center justify-center">
                   {providerDetails!.icon}
                 </TooltipTrigger>
                 <TooltipContent>{providerDetails!.name}</TooltipContent>
@@ -226,7 +226,7 @@ export const QuickActions = () => {
             {t("quickActionsLanguage")}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
-            <DropdownMenuSubContent sideOffset={8} className="rounded-xl p-1">
+            <DropdownMenuSubContent sideOffset={8} className="rounded-none p-1">
               <ScrollArea className="h-80">
                 {Object.entries(languages).map(([key, value]) => (
                   <DropdownMenuItem
@@ -248,7 +248,7 @@ export const QuickActions = () => {
             {t("quickActionsTheme")}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
-            <DropdownMenuSubContent className="rounded-xl p-1" sideOffset={8}>
+            <DropdownMenuSubContent className="rounded-none p-1" sideOffset={8}>
               {themes.map(({ key, label, icon: Icon }) => (
                 <DropdownMenuItem key={key} onClick={() => setTheme(key)}>
                   <span className="flex items-center gap-2">

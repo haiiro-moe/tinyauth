@@ -278,10 +278,14 @@ export const LoginPage = () => {
 
   return (
     <Card>
-      <CardHeader className="gap-1.5">
-        <CardTitle className="text-center text-xl">{ui.title}</CardTitle>
+      <CardHeader className="gap-3 border-b-2 border-accent/50 pb-6">
+        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
+          <span>GAKKOU // AUTH</span>
+          <span className="text-accent">● ONLINE</span>
+        </div>
+        <CardTitle className="text-center text-3xl uppercase tracking-tight">{ui.title}</CardTitle>
         {providers.length > 0 && (
-          <CardDescription className="text-center">
+          <CardDescription className="text-center text-xs uppercase tracking-widest">
             {oauthProviders.length !== 0
               ? t("loginTitle")
               : t("loginTitleSimple")}
