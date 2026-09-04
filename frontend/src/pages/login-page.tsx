@@ -42,7 +42,6 @@ const iconMap: Record<string, React.ReactNode> = {
 export const LoginPage = () => {
   const { auth, tailscale } = useUserContext();
   const {
-    ui,
     oauth,
     auth: { providers },
   } = useAppContext();
@@ -278,21 +277,21 @@ export const LoginPage = () => {
 
   return (
     <Card>
-      <CardHeader className="gap-3 border-b-2 border-accent/50 pb-6">
-        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
-          <span>GAKKOU // AUTH</span>
-          <span className="text-accent">● ONLINE</span>
+      <CardHeader className="gap-3 border-b border-border pb-6">
+        <div className="flex items-center justify-between border-b border-border px-6 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
+          <span>HAIIRO AUTH // SECURE</span>
+          <span className="text-muted-foreground">● READY</span>
         </div>
-        <CardTitle className="text-center text-3xl uppercase tracking-tight">{ui.title}</CardTitle>
+        <CardTitle className="px-6 pt-6 text-2xl uppercase tracking-tight">Haiiro Auth</CardTitle>
         {providers.length > 0 && (
-          <CardDescription className="text-center text-xs uppercase tracking-widest">
+          <CardDescription className="px-6 text-xs uppercase tracking-widest">
             {oauthProviders.length !== 0
               ? t("loginTitle")
               : t("loginTitleSimple")}
           </CardDescription>
         )}
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-4 px-6 pb-6 pt-6">
         {oauthProviders.length !== 0 && (
           <div className="flex flex-col gap-2.5 items-center justify-center">
             {oauthProviders.map((provider) => (
@@ -329,7 +328,7 @@ export const LoginPage = () => {
         )}
       </CardContent>
       {userAuthConfigured && (
-        <CardFooter>
+        <CardFooter className="border-t border-border px-6 pb-6 pt-6">
           <Button
             className="w-full"
             type="submit"

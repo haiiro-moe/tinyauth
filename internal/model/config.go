@@ -51,7 +51,7 @@ func NewDefaultConfiguration(runtimeEnv RuntimeEnv) *Config {
 			},
 		},
 		UI: UIConfig{
-			Title:                 "Tinyauth",
+			Title:                 "Haiiro Auth",
 			ForgotPasswordMessage: "You can change your password by changing the configuration.",
 			BackgroundImage:       "/background.webp",
 			WarningsEnabled:       true,

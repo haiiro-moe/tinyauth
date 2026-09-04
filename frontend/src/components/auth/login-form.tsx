@@ -41,7 +41,7 @@ export const LoginForm = (props: Props) => {
           name="username"
           render={({ field }) => (
             <FormItem className="mb-4 gap-0">
-              <FormLabel className="mb-2">{t("loginUsername")}</FormLabel>
+              <FormLabel className="mb-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">{t("loginUsername")}</FormLabel>
               <FormControl className="mb-1">
                 <Input
                   placeholder={t("loginUsername").toLocaleLowerCase()}
@@ -60,7 +60,7 @@ export const LoginForm = (props: Props) => {
           render={({ field }) => (
             <FormItem className="gap-0">
               <div className="relative mb-1">
-                <FormLabel className="mb-2">{t("loginPassword")}</FormLabel>
+                <FormLabel className="mb-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">{t("loginPassword")}</FormLabel>
                 <FormControl>
                   <Input
                     placeholder={t("loginPassword").toLowerCase()}
