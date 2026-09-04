@@ -16,7 +16,7 @@ export const OAuthButton = (props: Props) => {
   return (
     <Button
       onClick={onClick}
-      className={twMerge("rounded-md", className)}
+      className={twMerge("rounded-none border-2", className)}
       variant="outline"
       {...rest}
     >

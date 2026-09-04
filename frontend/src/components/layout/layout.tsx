@@ -13,18 +13,11 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
   }, [ui.title]);
 
   return (
-    <div
-      className="flex flex-col justify-center items-center min-h-svh px-4"
-      style={{
-        backgroundImage: `url(${ui.backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="absolute top-4 right-4">
+    <div className="square-ui relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 py-12">
+      <div className="absolute right-4 top-4 z-10">
         <QuickActions />
       </div>
-      <div className="max-w-sm md:min-w-sm min-w-xs">{children}</div>
+      <div className="relative z-10 w-full max-w-sm md:min-w-sm">{children}</div>
     </div>
   );
 };
