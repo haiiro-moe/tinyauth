@@ -1,12 +1,14 @@
 import { useAppContext } from "@/context/app-context";
 import { Outlet } from "react-router";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { DomainWarning } from "../domain-warning/domain-warning";
 import { QuickActions } from "../quick-actions/quick-actions";
 import { isTrustedDomain } from "@/lib/hooks/redirect-uri";
 
 const BaseLayout = ({ children }: { children: React.ReactNode }) => {
   const { ui } = useAppContext();
+  const { t } = useTranslation();
 
   useEffect(() => {
     document.title = ui.title;
@@ -17,14 +19,14 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col">
         <header className="mb-12 flex items-start justify-between gap-8">
           <div>
-            <p className="haiiro-eyebrow mb-3">HAIIRO AUTH / ACCESS CONTROL</p>
+            <p className="haiiro-eyebrow mb-3">{t("loginBrandEyebrow")}</p>
             <h1 className="haiiro-wordmark">
-              <span>HAIIRO</span> <span className="haiiro-wordmark-accent">AUTH</span>
+              <span>{t("loginBrandName")}</span> <span className="haiiro-wordmark-accent">{t("loginBrandAccent")}</span>
             </h1>
           </div>
           <div className="flex flex-col items-end gap-2 pt-1 text-right">
             <span className="haiiro-status-mark">0</span>
-            <span className="haiiro-meta">active sessions</span>
+            <span className="haiiro-meta">{t("loginActiveSessions")}</span>
           </div>
         </header>
 
@@ -33,8 +35,8 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
         </main>
 
         <footer className="haiiro-footer mt-12 flex flex-wrap justify-between gap-4">
-          <span>Authentication is required to continue.</span>
-          <span>standalone / protected</span>
+          <span>{t("loginFooterMessage")}</span>
+          <span>{t("loginFooterStatus")}</span>
         </footer>
       </div>
       <div className="absolute right-4 top-4 z-20">

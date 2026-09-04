@@ -119,6 +119,15 @@
   color: var(--accent);
 }
 
+.portal-auth-title {
+  color: oklch(0.88 0.012 260);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
 .haiiro-status-mark {
   display: flex;
   width: 2.1rem;

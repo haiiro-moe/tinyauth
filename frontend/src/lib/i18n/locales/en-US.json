@@ -1,4 +1,13 @@
 {
+  "loginBrandEyebrow": "HAIIRO AUTH / PERSONAL ACCOUNT",
+  "loginBrandName": "HAIIRO",
+  "loginBrandAccent": "AUTH",
+  "loginActiveSessions": "active sessions",
+  "loginFooterMessage": "Secure access for Haiiro services.",
+  "loginFooterStatus": "private / authenticated",
+  "loginSystemLabel": "HAIIRO AUTH // SECURE",
+  "loginReadyLabel": "READY",
+  "loginHeading": "Sign in",
   "loginTitle": "Sign in to continue with",
   "loginTitleSimple": "Welcome back, please login",
   "loginDivider": "Or",
