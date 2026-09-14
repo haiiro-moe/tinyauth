@@ -174,7 +174,7 @@ export const AuthorizePage = () => {
     <Card>
       <CardHeader className="mb-2">
         <div className="flex flex-col gap-3 items-center justify-center text-center">
-          <div className="bg-accent-foreground box-content text-muted text-xl font-bold font-sans rounded-lg size-8 p-2 flex items-center justify-center">
+          <div className="bg-accent-foreground box-content text-foreground text-xl font-bold font-sans rounded-none size-8 p-2 flex items-center justify-center">
             {screenParams.oidc_name ? screenParams.oidc_name.slice(0, 1) : "U"}
           </div>
           <CardTitle className="text-xl">
@@ -197,9 +197,9 @@ export const AuthorizePage = () => {
               if (!scope) return null;
               return (
                 <Tooltip key={scope.id}>
-                  <TooltipTrigger className="flex flex-row justify-center items-center gap-1 rounded-full bg-secondary font-light pl-2 pr-4 py-1 border-border border">
+                  <TooltipTrigger className="flex flex-row justify-center items-center gap-1 rounded-none bg-secondary font-light pl-2 pr-4 py-1 border-border border">
                     <div>{scope.icon}</div>
-                    <div className="text-sm text-accent-foreground">
+                    <div className="text-sm text-secondary-foreground">
                       {scope.name}
                     </div>
                   </TooltipTrigger>

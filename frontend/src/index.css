@@ -128,19 +128,6 @@
   line-height: 1;
 }
 
-.haiiro-status-mark {
-  display: flex;
-  width: 2.1rem;
-  height: 2.1rem;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid oklch(0.76 0.13 130);
-  border-radius: 999px;
-  color: oklch(0.76 0.13 130);
-  font-size: 1rem;
-  font-weight: 700;
-}
-
 .haiiro-meta,
 .haiiro-footer {
   color: var(--muted-foreground);

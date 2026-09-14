@@ -17,17 +17,11 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="haiiro-shell relative flex min-h-svh flex-col overflow-hidden px-6 py-8 sm:px-10 lg:px-16">
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col">
-        <header className="mb-12 flex items-start justify-between gap-8">
-          <div>
-            <p className="haiiro-eyebrow mb-3">{t("loginBrandEyebrow")}</p>
-            <h1 className="haiiro-wordmark">
-              <span>{t("loginBrandName")}</span> <span className="haiiro-wordmark-accent">{t("loginBrandAccent")}</span>
-            </h1>
-          </div>
-          <div className="flex flex-col items-end gap-2 pt-1 text-right">
-            <span className="haiiro-status-mark">0</span>
-            <span className="haiiro-meta">{t("loginActiveSessions")}</span>
-          </div>
+        <header className="mb-12">
+          <p className="haiiro-eyebrow mb-3">{t("loginBrandEyebrow")}</p>
+          <h1 className="haiiro-wordmark">
+            <span>{t("loginBrandName")}</span> <span className="haiiro-wordmark-accent">{t("loginBrandAccent")}</span>
+          </h1>
         </header>
 
         <main className="flex flex-1 items-start justify-center">

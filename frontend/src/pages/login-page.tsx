@@ -276,7 +276,7 @@ export const LoginPage = () => {
   }
 
   return (
-    <Card>
+    <Card className="py-0">
       <CardHeader className="gap-3 border-b border-border pb-6">
         <div className="flex items-center justify-between border-b border-border px-6 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
           <span>{t("loginSystemLabel")}</span>
