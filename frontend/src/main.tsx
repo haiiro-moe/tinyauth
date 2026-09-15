@@ -18,6 +18,7 @@ import { UserContextProvider } from "./context/user-context.tsx";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "./components/providers/theme-provider.tsx";
 import { AuthorizePage } from "./pages/authorize-page.tsx";
+import { AccountPage } from "./pages/account-page.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ createRoot(document.getElementById("root")!).render(
                       <Route path="/logout" element={<LogoutPage />} />
                       <Route path="/continue" element={<ContinuePage />} />
                       <Route path="/totp" element={<TotpPage />} />
+                      <Route path="/account" element={<AccountPage />} />
                       <Route
                         path="/forgot-password"
                         element={<ForgotPasswordPage />}

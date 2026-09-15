@@ -26,6 +26,11 @@ type TotpRequest struct {
 	Code string `json:"code"`
 }
 
+type ChangePasswordRequest struct {
+	CurrentPassword string `json:"currentPassword"`
+	NewPassword     string `json:"newPassword"`
+}
+
 type UserController struct {
 	log     *logger.Logger
 	runtime *model.RuntimeConfig
@@ -53,6 +58,7 @@ func NewUserController(i UserControllerInput) *UserController {
 	userGroup.POST("/logout", controller.logoutHandler)
 	userGroup.POST("/totp", controller.totpHandler)
 	userGroup.POST("/tailscale", controller.tailscaleHandler)
+	userGroup.POST("/password", controller.changePasswordHandler)
 
 	return controller
 }
@@ -459,5 +465,104 @@ func (controller *UserController) tailscaleHandler(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"status":  200,
 		"message": "Login successful",
+	})
+}
+
+func (controller *UserController) changePasswordHandler(c *gin.Context) {
+	var req ChangePasswordRequest
+
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		controller.log.App.Error().Err(err).Msg("Failed to bind JSON for password change")
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": "Bad Request",
+		})
+		return
+	}
+
+	context, err := new(model.UserContext).NewFromGin(c)
+
+	if err != nil || !context.IsAuthenticated() {
+		controller.log.App.Warn().Msg("Password change attempt without an authenticated session")
+		c.JSON(401, gin.H{
+			"status":  401,
+			"message": "Unauthorized",
+		})
+		return
+	}
+
+	// Only LDAP users are supported for now, local users are defined in
+	// static config and don't have anywhere to persist a changed password.
+	if !context.IsLDAP() {
+		controller.log.App.Warn().Str("username", context.GetUsername()).Msg("Password change attempted for a non-LDAP account")
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": "Password changes are only supported for LDAP accounts",
+		})
+		return
+	}
+
+	if len(req.NewPassword) < 8 {
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": "New password must be at least 8 characters long",
+		})
+		return
+	}
+
+	if req.NewPassword == req.CurrentPassword {
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": "New password must be different from the current password",
+		})
+		return
+	}
+
+	username := context.GetUsername()
+
+	isLocked, remaining := controller.auth.IsAccountLocked(username)
+
+	if isLocked {
+		controller.log.App.Warn().Str("username", username).Msg("Account is locked due to too many failed password change attempts")
+		c.Writer.Header().Add("x-tinyauth-lock-locked", "true")
+		c.Writer.Header().Add("x-tinyauth-lock-reset", time.Now().Add(time.Duration(remaining)*time.Second).Format(time.RFC3339))
+		c.JSON(429, gin.H{
+			"status":  429,
+			"message": fmt.Sprintf("Too many failed attempts. Try again in %d seconds", remaining),
+		})
+		return
+	}
+
+	// Re-search the user to recover their DN, the session context only
+	// stores the login username, not the bind DN.
+	search, err := controller.auth.SearchUser(username)
+
+	if err != nil || search.Type != model.UserLDAP {
+		controller.log.App.Error().Err(err).Str("username", username).Msg("Failed to re-resolve LDAP user during password change")
+		c.JSON(500, gin.H{
+			"status":  500,
+			"message": "Internal Server Error",
+		})
+		return
+	}
+
+	if err := controller.auth.ChangeLDAPPassword(search.Username, req.CurrentPassword, req.NewPassword); err != nil {
+		controller.log.App.Warn().Err(err).Str("username", username).Msg("Failed to change LDAP password")
+		controller.auth.RecordLoginAttempt(username, false)
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": "Failed to change password, please check your current password and try again",
+		})
+		return
+	}
+
+	controller.auth.RecordLoginAttempt(username, true)
+
+	controller.log.App.Info().Str("username", username).Msg("Password changed successfully")
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "Password changed successfully",
 	})
 }

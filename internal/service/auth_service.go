@@ -218,6 +218,24 @@ func (auth *AuthService) CheckUserPassword(search model.UserSearch, password str
 	return errors.New("user authentication failed")
 }
 
+// ChangeLDAPPassword changes a user's LDAP password after verifying their
+// current password. It always attempts to restore the service account bind
+// afterwards, even on failure, since LdapService.ChangePassword leaves the
+// shared connection bound as the target user.
+func (auth *AuthService) ChangeLDAPPassword(userDN string, oldPassword string, newPassword string) error {
+	if auth.ldap == nil {
+		return errors.New("ldap not configured")
+	}
+
+	changeErr := auth.ldap.ChangePassword(userDN, oldPassword, newPassword)
+
+	if err := auth.ldap.BindService(true); err != nil {
+		auth.log.App.Error().Err(err).Msg("Failed to restore ldap service account bind after password change attempt")
+	}
+
+	return changeErr
+}
+
 func (auth *AuthService) GetLocalUser(username string) *model.LocalUser {
 	if auth.runtime.LocalUsers == nil {
 		return nil

@@ -265,6 +265,28 @@ func (ldap *LdapService) Bind(userDN string, password string) error {
 	return nil
 }
 
+// ChangePassword verifies the user's current password by binding as them, then
+// issues the LDAP Password Modify Extended Operation on that same bind.
+// The caller is responsible for restoring the service account bind afterwards
+// (via BindService), regardless of whether this returns an error, since the
+// shared connection is left bound as the user either way.
+func (ldap *LdapService) ChangePassword(userDN string, oldPassword string, newPassword string) error {
+	ldap.mutex.Lock()
+	defer ldap.mutex.Unlock()
+
+	if err := ldap.conn.Bind(userDN, oldPassword); err != nil {
+		return fmt.Errorf("failed to verify current password: %w", err)
+	}
+
+	modifyRequest := ldapgo.NewPasswordModifyRequest(userDN, oldPassword, newPassword)
+
+	if _, err := ldap.conn.PasswordModify(modifyRequest); err != nil {
+		return fmt.Errorf("failed to modify password: %w", err)
+	}
+
+	return nil
+}
+
 func (ldap *LdapService) heartbeat() error {
 	ldap.log.App.Debug().Msg("Performing LDAP connection heartbeat")
 

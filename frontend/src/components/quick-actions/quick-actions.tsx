@@ -25,11 +25,12 @@ import {
   Palette,
   Settings,
   Sun,
+  User,
   UserRoundKey,
   X,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useRef } from "react";
 import {
   searchParamsFromObject,
@@ -62,6 +63,7 @@ export const QuickActions = () => {
   const { theme, setTheme } = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
+  const navigate = useNavigate();
 
   const [language, setLanguage] = useState<SupportedLanguage>(
     i18n.language as SupportedLanguage,
@@ -265,6 +267,10 @@ export const QuickActions = () => {
         {auth.authenticated && (
           <>
             <DropdownMenuSeparator />
+            <DropdownMenuItem onSelect={() => navigate("/account")}>
+              <User className="size-4" />
+              {t("quickActionsAccount")}
+            </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={() => logoutMutation.mutate()}
               className="text-destructive"
