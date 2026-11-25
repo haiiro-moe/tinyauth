@@ -57,3 +57,8 @@ config.certify.yml
 
 # claude stuff
 /.claude/
+
+# nix
+/result
+/result-*
+.direnv/
